@@ -2,6 +2,21 @@ from django.db import models
 
 
 
+class  Brand(models.Model):
+    name = models.CharField(max_length= 150,verbose_name= ' Называние модли ')
+    year = models.IntegerField()
+    description = models.CharField(verbose_name = 'История')
+
+    class Meta:
+        verbose_name = 'Бренд'
+        verbose_name_plural = 'Бренды'
+
+
+    def __str__(self):
+        return self.name
+
+
+
 class Auto(models.Model):
 
     TYPE_CHOICES = (
@@ -16,7 +31,11 @@ class Auto(models.Model):
     type_car = models.CharField(choices=TYPE_CHOICES, verbose_name="Тип машины")
     year = models.IntegerField(verbose_name='Год выпуска')
     created_at = models.DateTimeField()
-
+    brand = models.ForeignKey(
+        Brand,
+        on_delete = models.CASCADE,
+        related_name = 'autos'
+    )
     class Meta:
         verbose_name = 'Машина'
         verbose_name_plural = 'Машины'
@@ -25,12 +44,34 @@ class Auto(models.Model):
         return self.title
 
     
-# car = {
-#     'title':"BMW",
-    
-# }
+class CarReview(models.Model):
 
-# MODEL
-# serializer 
-# JSON 
+    CAR_RAITING = (
+        (1, '⭐️'),
+        (2, '⭐️⭐️'),
+        (3, '⭐️⭐️⭐️'),
+        (4, '⭐️⭐️⭐️⭐️'),
+        (5, '⭐️⭐️⭐️⭐️⭐️'),
+    )
 
+    name = models.CharField(max_length= 200, verbose_name = "Имя")
+    text = models.TextField( verbose_name = "Оценка")
+    raiting = models.IntegerField(choices=CAR_RAITING,  verbose_name = "Рейтинг" )
+   
+    car = models.ForeignKey(
+        Auto,
+        on_delete = models.CASCADE,
+        related_name = 'review'
+    )
+    created_at = models.DateTimeField(auto_now_add = True)
+
+
+    class Meta:
+        verbose_name = 'Оценка'
+        verbose_name_plural = 'Оценки'
+
+    def __str__(self):
+        return f'{self.name} - {self.car} '
+
+
+ 
