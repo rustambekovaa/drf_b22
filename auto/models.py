@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 
 class  Brand(models.Model):
@@ -54,10 +54,15 @@ class CarReview(models.Model):
         (5, '⭐️⭐️⭐️⭐️⭐️'),
     )
 
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='review'
+    )
     name = models.CharField(max_length= 200, verbose_name = "Имя")
     text = models.TextField( verbose_name = "Оценка")
     raiting = models.IntegerField(choices=CAR_RAITING,  verbose_name = "Рейтинг" )
-   
+    
     car = models.ForeignKey(
         Auto,
         on_delete = models.CASCADE,

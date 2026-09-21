@@ -8,11 +8,14 @@ from .views import (
     register,
     login,
     logout,
-    CarReviewListCreateView,
-    CarReviewDetailView,
-    AutoListCreateView,
-    AutoDetailView,
+    # CarReviewListCreateView,
+    # CarReviewDetailView,
+    # AutoListCreateView,
+    # AutoDetailView,
     BrandViewSet,
+    AutoViewSet,
+    CarReviewViewSet,
+    
 )
 
 from rest_framework.routers import DefaultRouter
@@ -20,6 +23,8 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
 router.register(r'brand', BrandViewSet)
+router.register(r'auto', AutoViewSet)
+router.register('reviews', CarReviewViewSet)
 
 urlpatterns = [
     path('register/', register),
@@ -30,11 +35,10 @@ urlpatterns = [
     # path('auto/<int:pk>/detail/', auto_detail),
     # path('auto/<int:pk>/delete/', auto_delete),
     # path('auto/<int:pk>/update/', auto_update),
-
-    path('car_review/', CarReviewListCreateView.as_view()),
-    path('car_review/<int:pk>/', CarReviewDetailView.as_view()),
-    path('car/', AutoListCreateView.as_view()),
-    path('car/<int:pk>/', AutoDetailView.as_view()),
+    # path('car_review/', CarReviewListCreateView.as_view()),
+    # path('car_review/<int:pk>/', CarReviewDetailView.as_view()),
+    # path('car/', AutoListCreateView.as_view()),
+    # path('car/<int:pk>/', AutoDetailView.as_view()),
     path('', include(router.urls))
     
 
